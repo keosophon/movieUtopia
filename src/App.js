@@ -6,12 +6,16 @@ const API_URL = "http://www.omdbapi.com?apikey=947af9f";
 
 function App() {
   const [movies, setMovies] = useState([]);
-  const [movieSearchTearm, setMovieSearchTerm] = useState("");
+  const [movieSearchTerm, setMovieSearchTerm] = useState("");
 
   const movieSearch = async (title) => {
     const response = await fetch(`${API_URL}&s=${title}`);
     const data = await response.json();
-    setMovies(data.Search);
+    if (data.Search) {
+      setMovies(data.Search);
+    } else {
+      setMovies([]);
+    }
   };
 
   useEffect(() => {
@@ -19,19 +23,28 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <div>Welcme To Movie Utopia</div>
-      <div>
+    <div className="container">
+      <h1 className="my-4">Welcome To Movie Utopia</h1>
+      <div className="mb-4">
         <input
           type="text"
-          value={movieSearchTearm}
+          value={movieSearchTerm}
           onChange={(e) => setMovieSearchTerm(e.target.value)}
+          className="form-control"
+          placeholder="Search for movies"
         />
-        <button onClick={() => movieSearch(movieSearchTearm)}>Search</button>
+        <button 
+          onClick={() => movieSearch(movieSearchTerm)} 
+          className="btn btn-primary mt-2"
+        >
+          Search
+        </button>
       </div>
-      <div>
-        {movies?.length > 0 ? (
-          movies.map((movie) => <MovieCard movie={movie} />)
+      <div className="row">
+        {movies.length > 0 ? (
+          movies.map((movie) => (
+            <MovieCard key={movie.imdbID} movie={movie} />
+          ))
         ) : (
           <p>Movie not found!</p>
         )}

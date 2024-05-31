@@ -1,16 +1,22 @@
 import React from 'react';
 
-function MovieCard({movie}) {
-    const { Title, Year, imdbID, Type, Poster } = movie;
+function MovieCard({ movie }) {
+  const { Title, Year, imdbID, Type, Poster } = movie;
+  
   return (
-    <div key={imdbID}>
-        <h5>{Title}</h5>
-        <h6>{Year}</h6>
-          <img
-            src={Poster !== "N/A" ? Poster : "https://placehold.co/400"}
-            alt="Movie Poster"
-          />
-        <p>{Type}</p>
+    <div className="col-md-3 mb-4">
+      <div className="card">
+        <img
+          src={Poster !== "N/A" ? Poster : "https://placehold.co/400"}
+          alt="Movie Poster"
+          className="card-img-top"
+        />
+        <div className="card-body">
+          <h5 className="card-title">{Title}</h5>
+          <h6 className="card-subtitle mb-2 text-muted">{Year}</h6>
+          <p className="card-text">{Type}</p>
+        </div>
+      </div>
     </div>
   );
 }
